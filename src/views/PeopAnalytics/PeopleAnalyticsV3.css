@@ -1,0 +1,590 @@
+main {
+    /* border: 2px solid red; */
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+
+    min-height: 100vh;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+    font-family: "Roboto";
+}
+
+header {
+    /* border: 2px solid green; */
+    height: 60px;
+    display: flex;
+    align-items: center;
+}
+
+.headerLeftDiv {
+    /* border: 2px solid; */
+    border-bottom: 1px solid #AA894C;
+    position: relative;
+    background: url('images/pattern1.jpg');
+    background-size: contain;
+    opacity: 1;
+    height: 100%;
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+.headerLogo {
+    width: 140px;
+}
+
+.headerLogoTitle {
+
+    color: rgba(149, 45, 152, 1);
+    font-weight: bold;
+    font-family: "Roboto";
+    font-size: 14px;
+}
+
+.headerRightDiv {
+    /* border: 2px solid blue; */
+    border-left: 10px solid #AA894C;
+    width: 100%;
+    height: 100%;
+    background: #00656F;
+    display: flex;
+    box-sizing: border-box;
+}
+
+.headerRightDivWebsiteName {
+    /* border: 1px solid #fff; */
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+
+}
+
+.headerMainHeading {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 25px;
+    /* line-height: 65px; */
+    font-family: "Roboto";
+}
+
+.headerSubHeading {
+    color: #E3CD9C;
+    font-size: 10px;
+    opacity: 0.8;
+    font-family: "Roboto";
+}
+
+.headerRightDateDiv {
+    /* background: #00656F url('images/pattern1.jpg'); */
+    /* background-blend-mode: color-burn; */
+    background-size: cover;
+    font-family: "Roboto";
+    width: 250px;
+}
+
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+.PAMainBox {
+    /* border: 1px solid green; */
+    /* display: flex;
+    justify-content: space-between; */
+    gap: 5px;
+}
+
+.PAMainLeftBox {
+    width: 100%;
+    /* padding-top: 10px; */
+    /* border: 1px solid red; */
+    flex: 0.2;
+    text-wrap: nowrap;
+    max-width: max-content;
+    /* margin: 10px 0px; */
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* gap: 10px; */
+    /* justify-content: center; */
+    /* overflow: auto; */
+
+    height: 100%;
+    justify-content: space-between;
+
+}
+
+.PASideBarTopBox1 {
+    /* border: 3px solid green; */
+    /* flex: 1; */
+    /* width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: space-evenly; */
+    /* gap: 50px; */
+    /* height:calc(-102px + 40vh);;
+    
+    height: 50%;
+    gap: 100px; */
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-evenly; */
+    gap: 10px;
+
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    line-height: 0px;
+
+
+    /* flex: 1; */
+}
+
+.PASideBarTopBox2 {
+    /* border: 2px solid purple; */
+    /* height: 55%; */
+
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    /* height: calc(15% + 100px + 60vh); */
+    /* calc(-15% - 30px + 60vh */
+    /* height: 40%; */
+    margin: auto;
+}
+
+.PASideBarTopBox2>h3 {
+    background-color: #3f00ff;
+    color: #fff;
+    font-size: 30px;
+    /* border-radius: 10px; */
+}
+
+.PASideBarTopBox2>p {
+    /* background-color: #ff00ff; */
+    color: black;
+    font-size: 140px;
+    font-weight: bold;
+
+}
+
+.PASideBarBottomBox {
+
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+
+    /* border-radius: 10px; */
+}
+
+.PASideBarItem {
+    flex: 1;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 10px;
+    width: 200px;
+    height: 50px;
+    /* margin-bottom: 20px; */
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    /* opacity: 0.7; */
+    transition: 0.1s all ease-in-out;
+    cursor: pointer;
+    /* border: 2px solid black; */
+    /* margin-bottom: 38px; */
+}
+
+
+.PASideBarItem:hover {
+    /* border: 1px solid #92278f; */
+    border: 1px solid #5ABEFF;
+    /* opacity: 0.9; */
+}
+
+.PASideBarItem.active:hover {
+    border: 3px solid #5ABEFF;
+    /* opacity: 1; */
+}
+
+.PASideBarItem.active {
+    border: 3px solid #5ABEFF;
+    opacity: 1;
+}
+
+
+
+.PASideBarItemIconBox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #3f00ff;
+    /* color: #92278f; */
+}
+
+.PASideBarItemTitle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 25px;
+    font-weight: bold;
+    /* color: #af43cc; */
+    color: rgb(85, 85, 85);
+}
+
+.PAMainRightBox {
+    /* border: 1px solid red; */
+    flex: 1;
+    height: 100%;
+    display: flex;
+}
+
+.PARDashboardBox {
+    /* border: 1px solid; */
+    height: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 0px 10px;
+    /* padding: 20px 0px 12px 0px; */
+}
+
+.PACenterTopArea {
+    /* border: 1px solid blue; */
+    height: 100%;
+    width: 100%;
+}
+
+.PACenterBottomArea {
+    /* border: 1px solid red; */
+    /* height: 23%; */
+    width: 100%;
+    /* padding: 0px 20px; */
+    display: flex;
+    /* margin-bottom: 10px; */
+    align-items: center;
+    /* gap: 20px */
+    gap: 10px;
+}
+
+.PACenterBottomAreadiv1 {
+    /* border: 1px solid green; */
+    display: flex;
+    width: 100%;
+    gap: 20px;
+    border-radius: 10px;
+}
+
+.PACenterBottomAreadiv2 {
+    /* border: 1px solid blue; */
+    display: flex;
+    width: 50%;
+    gap: 20px;
+    /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); */
+    border-radius: 10px;
+    /* padding: 5px; */
+}
+
+/* ------------------------------------ */
+
+.PARightBoxChartsLeft {
+    /* border: 1px solid blue; */
+    /* flex: 1; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    /* height: 100vh; */
+}
+
+
+
+.PARightBoxChartsLeftCameraAndMap {
+    /* border: 1px solid; */
+    height: 100%;
+    flex: 1;
+    display: flex;
+    gap: 10px;
+    /* gap: 10px; */
+    /* padding: 10px; */
+}
+
+.imageParentBox {
+    position: relative;
+    width: 100%;
+    /* Set the width of the parent div */
+    height: 100%;
+    /* Set a fixed height for the parent div */
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+    overflow: hidden;
+    /* Ensure content doesn't overflow */
+}
+
+.streamImage {
+    width: 100%;
+    /* Ensure image width fills the container */
+    height: 100%;
+    min-height: 48vh;
+    /* Ensure image height fills the container */
+    object-fit: cover;
+    /* Scale the image as large as possible while maintaining aspect ratio */
+    border-radius: 15px;
+}
+
+.loadingIndicator {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.mapParentBox {
+    background: transparent;
+    /* flex: 0.8; */
+    height: 100%;
+    width: 40%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    line-height: 0px;
+
+    /* border: 1px solid red; */
+    border-radius: 20px;
+}
+
+.PARightBoxChartsLeftMiddleBox {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+
+    /* padding: 10px; */
+
+
+
+
+}
+
+.chart1,
+.chart2 {
+    flex: 1;
+    /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); */
+    border-radius: 15px;
+
+
+    width: 100%;
+
+    height: 100%;
+
+
+}
+
+
+/* .chart2 { */
+/* flex: 1; */
+/* border: 1px solid; */
+/* height: 100%; */
+/* width: 50%; */
+/* } */
+
+.PARightBoxChartsLeftBottomBox {
+    /* border: 1px solid; */
+    height: 80px;
+    /* flex: 1; */
+    display: flex;
+    gap: 50px;
+}
+
+/* ------------------------------------ */
+
+/* ------------------------------------ */
+.PARightBoxChartsRight {
+    /* border: 1px solid blue; */
+    /* flex: 0.2;
+    display: flex;
+    flex-direction: column; */
+    /* padding-top: 20px; */
+    width: 25%;
+}
+
+.PAMostRigtTopBox {
+    /* border: 1px solid; */
+    display: flex;
+    flex-direction: column;
+}
+
+.PAInfoCard {
+    border-radius: 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0px 3px 0 rgba(0, 0, 0, 0.2);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.PAMostRigtBottomBox {}
+
+.PAGenderCardBox {
+    /* border: 2px solid green; */
+    flex: 1;
+
+    border-radius: 15px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    border-bottom: 3px solid #952D98;
+}
+
+.showChartsIconBox {
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    border-radius: 50%;
+    background: #2A6EBB;
+    color: #fff;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all .3s ease;
+    /* animation: upAndDown 2s infinite ease; */
+    animation: upAndDown 1.5s infinite alternate;
+    -webkit-animation: upAndDown 1.5s infinite alternate;
+}
+
+@keyframes upAndDown {
+
+    0% {
+        transform: translate(-50%, -50%);
+    }
+
+    100% {
+        transform: translate(-50%, -70%);
+    }
+}
+
+.showChartsIconBox:hover,
+.hideChartsIconBox:hover {
+    opacity: 0.8;
+}
+
+.hideChartsIconBox {
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    border-radius: 50%;
+    background: #2A6EBB;
+    color: #fff;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all .3s ease;
+    animation: upAndDown 1.5s infinite alternate;
+    -webkit-animation: upAndDown 1.5s infinite alternate;
+}
+
+.settingsIconBox {
+    /* border: 1px solid; */
+
+    /* border-radius: 50%; */
+    position: fixed;
+    bottom: 5px;
+    z-index: 1;
+    right: 20px;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    transition: all .3s ease;
+}
+
+.settingIcon,
+.pdfIcon {
+    /* background: #808285; */
+    background: #e6e8eb;
+    border-radius: 50%;
+    padding: 5px;
+}
+
+.pdfIcon:hover {
+    /* font-size: 50px; */
+    opacity: 0.9;
+}
+
+.settingsIconBox:hover {
+    /* font-size: 50px; */
+    transition: all .3s ease;
+}
+
+.settingIcon:hover {
+    animation: rotate 1s linear;
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(45deg);
+    }
+
+    100% {
+        transform: rotate(180deg);
+    }
+}
+
+.chartsMainBox {
+    position: relative;
+    width: calc(50% - 10px);
+    height: 400px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.chartsDateDiv {
+    font-family: 'DINArabic_Regular';
+    position: absolute;
+    right: 10px;
+    top: 14px;
+    z-index: 1;
+    color: #1E1656;
+    font-weight: 600;
+    font-size: 18px
+}
+
+/* ------------------------------------ */
+
+
+@media only screen and (min-height: 1000px) {
+
+    .PAGenderCardBox {
+        height: 80% !important;
+    }
+}
+
+@media only screen and (min-width: 1125px) {
+    .PARDashboardBox {
+        gap: 15px !important;
+    }
+}

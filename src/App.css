@@ -1,0 +1,65 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+    font-family: 'DINArabic_Medium';
+    src: url('/fonts/DINNextLTArabic_Medium.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'DINArabic_Regular';
+    src: url('/fonts/DINNextLTArabic_Regular.ttf') format('truetype');
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'DINArabic_Regular';
+    /* border-radius: 0px !important; */
+}
+
+body {
+    box-sizing: border-box;
+    font-family: 'DINArabic_Regular';
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'DINArabic_Medium';
+    /* color: #673A8E; */
+    font-weight: bold;
+    /* border-bottom: 8px solid #0f6cb5; */
+    padding-bottom: 10px;
+}
+
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+    font-family: 'DINArabic_Medium';
+    /* color: #673A8E; */
+    font-weight: bold;
+    /* border-bottom: 8px solid #0f6cb5; */
+    padding-bottom: 10px;
+}
+
+button {
+    font-family: 'DINArabic_Regular';
+    /* background: #6a2c91; */
+    padding: 3px 15px !important;
+    margin-right: 1px;
+    -ms-transition: all .3s ease-out;
+    -webkit-transition: all .3s ease-out;
+    transition: all .3s ease-out;
+    border: 0px;
+    border-radius: 0px !important;
+
+}

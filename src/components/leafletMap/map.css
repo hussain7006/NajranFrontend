@@ -1,0 +1,36 @@
+body {
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
+}
+
+#root,
+.leaflet-container {
+  height: 100%;
+  width: 100%;
+  /* border-radius: 5px; */
+}
+
+.leaflet-container {
+  border-radius: 15px !important;
+}
+
+.mapParentDiv {
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  /* border: 2px solid red; */
+}
+
+.videoMarker {
+  /* color: red; */
+  /* -webkit-filter: hue-rotate(180deg); */
+  /* filter: hue-rotate(180deg); */
+  /* filter: opacity(0.6) drop-shadow(0 0 0 white); */
+}
+
+.satelliteMarker {
+  color: #fff;
+}

@@ -1,0 +1,13 @@
+.error-message {
+    /* border: 1px solid; */
+    /* display: flex; */
+    width: max-content;
+    color: red;
+    margin-left: 10px;
+    font-weight: bold;
+}
+
+.error{
+    /* border: 1px solid red; */
+    border-color: red;
+}
