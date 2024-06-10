@@ -23,8 +23,10 @@ header {
     /* border: 2px solid; */
     border-bottom: 1px solid #AA894C;
     position: relative;
-    background: url('images/pattern1.jpg');
-    background-size: contain;
+    /* 00656F */
+    background: #F1F1F1 url('images/pattern1.jpg');
+    background-blend-mode: color-burn;
+    background-size: cover;
     opacity: 1;
     height: 100%;
     width: 200px;

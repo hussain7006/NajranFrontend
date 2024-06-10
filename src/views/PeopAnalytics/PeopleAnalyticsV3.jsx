@@ -17,6 +17,7 @@ import multipleUserIcon from "./images/maleFemaleGroup.png";
 import view3 from "./videos/view3.mp4"
 import "./PeopleAnalyticsV3.css"
 import axios from 'axios';
+import AreaChart from '../../components/charts/AreaChart.jsx';
 
 const PeopleAnalyticsV3 = () => {
 
@@ -302,6 +303,37 @@ const PeopleAnalyticsV3 = () => {
       });
   }
 
+  const [areaChartData, setAreaChartData] = useState({
+    hours: [],
+    males: [],
+    females: []
+  });
+
+  const fetchDataForAreaChart = () => {
+    const url = `${constants.historicDataIP}/stream/gender_hourly_counts`;
+    const params = { date_select: selectedDate };
+    const headers = { accept: 'application/json' };
+
+    axios.get(url, { params, headers })
+      .then(response => {
+        let hours = response.data.hours;
+        let males = response.data.male;
+        let females = response.data.female;
+
+        // console.log("hours:", hours);
+        // console.log("males:", males);
+        // console.log("females:", females);
+
+        setAreaChartData({
+          hours: hours,
+          males: males,
+          females: females
+        });
+      })
+      .catch(error => {
+        console.error('There was an error!', error);
+      });
+  };
 
   const [controller1, setController1] = useState(new AbortController());
   const [controller2, setController2] = useState(new AbortController());
@@ -323,6 +355,7 @@ const PeopleAnalyticsV3 = () => {
     };
 
     fetchData();
+    fetchDataForAreaChart();
 
 
     const cleanup = () => {
@@ -644,13 +677,17 @@ const PeopleAnalyticsV3 = () => {
                 style={{
                   margin: "0px",
                   width: "calc(50% - 10px)",
+                  borderRadius: 10,
                   display: "flex",
                   alignItems: "center",
                   boxShadow: " 0 4px 8px 0 rgba(0, 0, 0, 0.2)",
+                  borderBottom: "3px solid #952D98",
                 }}
               >
 
-                <PlotlyDonut
+                <AreaChart title="MALE" type="male" chartData={areaChartData} />
+
+                {/* <PlotlyDonut
                   tags={constants.doughnutChart1Tags}
                   upwardMaleCount={
                     selectedCamera === "camera1" && camera1StreamInfo.data && camera1StreamInfo.data.length >= 1 ?
@@ -688,9 +725,9 @@ const PeopleAnalyticsV3 = () => {
                   doughnut2Title={constants.doughnut2Title}
                   labelFontSize={constants.donutChartTitleFontSize}
 
-                />
+                /> */}
 
-                <PlotlyDonut
+                {/* <PlotlyDonut
                   tags={constants.doughnutChart2Tags}
                   upwardMaleCount={
                     selectedCamera === "camera1" && camera1StreamInfo.data && camera1StreamInfo.data.length >= 1 ?
@@ -726,7 +763,7 @@ const PeopleAnalyticsV3 = () => {
                   doughnut1Title={constants.doughnut1Title}
                   doughnut2Title={constants.doughnut2Title}
                   labelFontSize={constants.donutChartTitleFontSize}
-                />
+                /> */}
 
 
               </div>
@@ -742,22 +779,25 @@ const PeopleAnalyticsV3 = () => {
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
-                  borderRadius: 10
+                  borderRadius: 10,
+                  borderBottom: "3px solid #952D98"
                 }}
               >
-                <div className="chart2" style={{ position: "relative" }}>
+                {/* <div className="chart2" style={{ position: "relative", }}> */}
 
 
-                  <PlotlyGroupedBarChart
+                <AreaChart title="FEMALE" type='female' chartData={areaChartData} />
+
+                {/* <PlotlyGroupedBarChart
                     groupChartData={groupChartData}
                     setGroupChartData={setGroupChartData}
                     side={1}
                     historyData={historyData}
                     side1Text={constants.side1Text}
                     side2Text={constants.side2Text}
-                  />
+                  /> */}
 
-                </div>
+                {/* </div> */}
               </div>
             </div>
 
