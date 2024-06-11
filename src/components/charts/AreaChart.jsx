@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Chart from 'react-apexcharts';
 import { constants } from '../../constants/constantsV3';
 
-function AreaChart({ title, type, chartData }) {
+function AreaChart({ title, type, chartData, cameraIndex }) {
     // console.log("chartData:", chartData);
 
     const getFillColor = (type) => {
@@ -182,7 +182,7 @@ function AreaChart({ title, type, chartData }) {
                     },
                 ],
                 noData: {
-                    text: !constants.streaming ? "Stream is offline" : "Data will appear shortly. Please wait...",
+                    text: (!constants.streaming || cameraIndex != 0) ? "Stream is offline" : "Data will appear shortly. Please wait...",
                     offsetX: 0,
                     offsetY: -20,
                     style: {

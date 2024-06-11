@@ -841,7 +841,11 @@ const PeopleAnalyticsV3 = () => {
                   imgSrc={multipleUserIcon}
                   imgLeftWidth={"4vw"}
                   imgRightWidth={"4.5vw"}
-                  value={(camera1StreamInfo.data && camera1StreamInfo?.data.length > 0) ? camera1StreamInfo.data[0].cumulative_count : 0}
+                  value={
+                    (cameraIndex == 0) ?
+                      (camera1StreamInfo.data && camera1StreamInfo?.data.length > 0) ? camera1StreamInfo.data[0].cumulative_count : 0
+                      : 0
+                  }
                 />
               </div>
               <div className="PAGenderCardBox" >
@@ -893,7 +897,7 @@ const PeopleAnalyticsV3 = () => {
                 }}
               >
 
-                <AreaChart title="MALE" type="male" chartData={areaChartData} />
+                <AreaChart title="MALE" type="male" chartData={areaChartData} cameraIndex={cameraIndex} />
 
                 {/* <PlotlyDonut
                   tags={constants.doughnutChart1Tags}
@@ -994,7 +998,7 @@ const PeopleAnalyticsV3 = () => {
                 {/* <div className="chart2" style={{ position: "relative", }}> */}
 
 
-                <AreaChart title="FEMALE" type='female' chartData={areaChartData} />
+                <AreaChart title="FEMALE" type='female' chartData={areaChartData} cameraIndex={cameraIndex} />
 
                 {/* <PlotlyGroupedBarChart
                     groupChartData={groupChartData}
