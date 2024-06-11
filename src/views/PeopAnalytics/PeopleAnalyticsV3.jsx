@@ -459,11 +459,6 @@ const PeopleAnalyticsV3 = () => {
 
 
 
-
-
-
-
-
   const [controller1, setController1] = useState(new AbortController());
   const [controller2, setController2] = useState(new AbortController());
 
@@ -484,9 +479,6 @@ const PeopleAnalyticsV3 = () => {
     };
 
     fetchData();
-    // fetchDataForAreaChart();
-    // fetchGetTotalVisitorsCountApi();
-
 
     const cleanup = () => {
       controller1.abort();

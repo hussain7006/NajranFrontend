@@ -1,6 +1,4 @@
 const INITIAL_STATE = {
-    // headerHeight: 10,
-    // headerHeight: 92,
     headerHeight: 62,
     isLoggedIn: false,
     user: {
@@ -31,8 +29,6 @@ export default (state = INITIAL_STATE, action) => {
         return { ...state, user: { ...state.user, mapImage: action.value } }
     }
     else if (action.type === "DOWNLOADPDFTRIGGERED") {
-        // console.log("in reducer DOWNLOADPDFTRIGGERED");
-        // console.log(action);
         return { ...state, isDownloadPdfTriggered: !state.isDownloadPdfTriggered }
     }
 
