@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import Chart from 'react-apexcharts';
 import { constants } from '../../constants/constantsV3';
-
 function AreaChart({ title, type, chartData, cameraIndex }) {
-    // console.log("chartData:", chartData);
-
+    // console.log("chart:");
+    // console.log("cameraIndex:", cameraIndex);
     const getFillColor = (type) => {
         switch (type) {
             case 'male':
@@ -12,10 +11,9 @@ function AreaChart({ title, type, chartData, cameraIndex }) {
             case 'female':
                 return ['#FF69B4', '#FFFFFF']; // Pink gradient for female
             default:
-                return ['#ff00ff', '#FFFFFF']; // Default magenta gradient
+                return ['#FF00FF', '#FFFFFF']; // Default magenta gradient
         }
     };
-
     const data = [10, 2, 50, 89, 2,]
     const [state, setState] = useState({
         areaChartData: {
@@ -31,7 +29,7 @@ function AreaChart({ title, type, chartData, cameraIndex }) {
                         fontSize: '14px',
                         fontWeight: 'bold',
                         fontFamily: undefined,
-                        color: (type == "female") ? '#ff00ff' : "#2A6EBB",
+                        color: (type == "female") ? '#FF00FF' : "#2A6EBB",
                     },
                 },
                 chart: {
@@ -57,7 +55,6 @@ function AreaChart({ title, type, chartData, cameraIndex }) {
                     // style: {
                     //     fontSize: '14px',
                     //     fontFamily: 'Helvetica, Arial, sans-serif',
-
                     //     colors: [function (opts) {
                     //         let value = opts.series[0][opts.dataPointIndex]
                     //         if (value == 1) {
@@ -78,7 +75,6 @@ function AreaChart({ title, type, chartData, cameraIndex }) {
                     //     }
                     //     ]
                     // },
-
                 },
                 grid: {
                     show: false,
@@ -92,7 +88,7 @@ function AreaChart({ title, type, chartData, cameraIndex }) {
                         position: 'back',
                         opacity: 0.9,
                         stroke: {
-                            color: '#b6b6b6',
+                            color: '#B6B6B6',
                             width: 0,
                             dashArray: 0,
                         },
@@ -140,7 +136,7 @@ function AreaChart({ title, type, chartData, cameraIndex }) {
                         colorStops: [
                             {
                                 offset: 0,
-                                color: (type == "female") ? '#ff00ff' : "#2A6EBB", // Pink (filled color)
+                                color: (type == "female") ? '#FF00FF' : "#2A6EBB", // Pink (filled color)
                                 opacity: 0.5,
                             },
                             {
@@ -150,7 +146,6 @@ function AreaChart({ title, type, chartData, cameraIndex }) {
                             },
                         ],
                     }
-
                 },
                 // markers: {
                 //     size: 3,
@@ -160,7 +155,7 @@ function AreaChart({ title, type, chartData, cameraIndex }) {
                 // },
                 stroke: {
                     curve: 'smooth',
-                    colors: (type == "female") ? ['#ff00ff'] : ["#2A6EBB"], // Magenta (outline color)
+                    colors: (type == "female") ? ['#FF00FF'] : ["#2A6EBB"], // Magenta (outline color)
                     width: 3, // Outline width
                 },
                 dropShadow: {
@@ -191,18 +186,15 @@ function AreaChart({ title, type, chartData, cameraIndex }) {
                         fontFamily: undefined
                     }
                 },
-
             },
             series: [
                 {
                     name: title,
-                    data: (cameraIndex != 0) && (type === 'male') ? chartData.males : chartData.females,
-
+                    data: (cameraIndex == 0) ? (type === 'male') ? chartData.males : chartData.females : [],
                 },
             ],
         },
     });
-
     useEffect(() => {
         setState(prevState => ({
             areaChartData: {
@@ -210,7 +202,7 @@ function AreaChart({ title, type, chartData, cameraIndex }) {
                 series: [
                     {
                         ...prevState.areaChartData.series[0],
-                        data: type === 'male' ? chartData.males : chartData.females,
+                        data: (cameraIndex == 0) ? type === 'male' ? chartData.males : chartData.females : [],
                         // data: data?.length > 0 ? data : [],
                     },
                 ],
@@ -223,12 +215,9 @@ function AreaChart({ title, type, chartData, cameraIndex }) {
                 },
             },
         }));
-
     }, [chartData, cameraIndex]);
-
     return (
         <div style={{ width: "100%", height: "88%" }}>
-
             <Chart
                 options={state.areaChartData.options}
                 series={state.areaChartData.series}
@@ -240,5 +229,4 @@ function AreaChart({ title, type, chartData, cameraIndex }) {
         </div>
     );
 }
-
 export default AreaChart;
