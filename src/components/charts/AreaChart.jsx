@@ -196,7 +196,7 @@ function AreaChart({ title, type, chartData, cameraIndex }) {
             series: [
                 {
                     name: title,
-                    data: type === 'male' ? chartData.males : chartData.females,
+                    data: (cameraIndex != 0) && (type === 'male') ? chartData.males : chartData.females,
 
                 },
             ],
@@ -218,7 +218,7 @@ function AreaChart({ title, type, chartData, cameraIndex }) {
                     ...prevState.options,
                     xaxis: {
                         ...prevState.areaChartData.options.xaxis,
-                        categories: chartData.hours || [],
+                        categories: (chartData.hours && (cameraIndex == 0)) || [],
                     },
                 },
             },
