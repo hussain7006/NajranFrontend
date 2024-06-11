@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import createPlotlyComponent from 'react-plotlyjs';
 import Plotly from 'plotly.js/dist/plotly-cartesian';
-import { constants } from "../../constants/constants.js"
+import { constants } from "../../constants/backup_constants.js"
 
 const PlotlyComponent = createPlotlyComponent(Plotly);
 

@@ -21,7 +21,7 @@ import videoMarkerNavyBlue from "/images/images/video_camera_navy_blue.png"
 import videoMarkerPink from "/images/images/video_camera_Pink.png"
 import { getToken } from "../../utils/functions";
 import axios from "axios";
-import { constants } from "../../constants/constants";
+import { constants } from "../../constants/backup_constants";
 // import riyadh from "/images/riyadh.png"
 
 

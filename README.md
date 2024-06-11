@@ -19,7 +19,7 @@ This document provides detailed instructions to set up and run the frontend appl
    **Frontend Folder Name:** Dashboard_React
 
 3. **Update constants file:**
-    Locate the constants.js file in Dashboard_React/people_analytics/src/constants/constants.js.
+    Locate the constants.js file in Dashboard_React/people_analytics/src/constants/constantsV3.js.
     Open the file and replace all instances of http://192.168.100.114:8000 with http://localhost:8000.
 
 4. **Install Dependencies:**

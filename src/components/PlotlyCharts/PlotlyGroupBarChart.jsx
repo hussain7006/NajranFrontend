@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Plot from 'react-plotly.js';
 import CircularProgress from '@mui/material/CircularProgress';
 
-import { constants } from "../../constants/constants.js"
+// import { constants } from "../../constants/constants.js"
 
 function PlotlyGroupedBarChart({
     id,
