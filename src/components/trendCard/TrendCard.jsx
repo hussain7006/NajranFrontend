@@ -17,7 +17,7 @@ const CardContentNoPadding = styled(CardContent)(`
 `);
 
 export default function TrendCard(props) {
-    let { trendCardData } = props;
+    let { trendCardData, cameraIndex } = props;
     // console.log("trendCardData:", trendCardData);
 
 
@@ -39,11 +39,16 @@ export default function TrendCard(props) {
                 position: "relative"
             }}>
                 <div style={{ width: "50%", paddingLeft: "0px" }}>
-                    
+
                     <div style={{ fontSize: 15, fontWeight: "bold", fontFamily: "Roboto", color: "#952D98" }}>{constants.trendCardTitle1}</div>
                     <div style={{ fontSize: 12 }}>{constants.trendCardTitle2}</div>
                     <div style={{ fontSize: "2vw", fontFamily: "Roboto", fontWeight: 500, textAlign: "center" }}>
-                        {trendCardData.lastHourCount}
+                        {
+                            (cameraIndex == 0) ?
+                                trendCardData.lastHourCount
+                                :
+                                0
+                        }
                     </div>
                 </div>
                 <div style={{ width: "50%", display: "flex", justifyContent: "center", alignItems: "center" }}>
@@ -53,15 +58,17 @@ export default function TrendCard(props) {
                         autoDrawDuration={1000}
                         autoDrawEasing="ease-out"
                         data={
-                            (trendCardData.counts.length) > 0
-                                ?
-                                (trendCardData.counts.length == 1)
+                            (cameraIndex == 0) ?
+                                (trendCardData.counts.length) > 0
                                     ?
-                                    ([1, 1])
+                                    (trendCardData.counts.length == 1)
+                                        ?
+                                        ([1, 1])
+                                        :
+                                        (trendCardData.counts)
                                     :
-                                    (trendCardData.counts)
-                                :
-                                ([1, 1])
+                                    ([1, 1])
+                                : [1, 1]
                             // ([0, 2, 5, 9, 5, 10, 3, 5, 0, 0, 1, 8, 2, 9, 11])
                         }
                         gradient={

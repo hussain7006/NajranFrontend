@@ -778,7 +778,11 @@ const PeopleAnalyticsV3 = () => {
                   imgSrcRight={maleIcon}
                   imgLeftWidth={"2.6vw"}
                   imgRightWidth={"4.5vw"}
-                  value={(camera1StreamInfo.data && camera1StreamInfo?.data.length > 0) ? camera1StreamInfo.data[0].instant_count : 0}
+                  value={
+                    (cameraIndex == 0) ?
+                      (camera1StreamInfo.data && camera1StreamInfo?.data.length > 0) ? camera1StreamInfo.data[0].instant_count : 0
+                      : 0
+                  }
                 />
               </div>
               <div className="PAGenderCardBox" >
@@ -843,6 +847,7 @@ const PeopleAnalyticsV3 = () => {
               <div className="PAGenderCardBox" >
                 <TrendCard
                   trendCardData={trendCardData}
+                  cameraIndex={cameraIndex}
                 />
               </div>
 
