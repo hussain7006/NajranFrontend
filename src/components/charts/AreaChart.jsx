@@ -224,7 +224,7 @@ function AreaChart({ title, type, chartData, cameraIndex }) {
             },
         }));
 
-    }, [chartData]);
+    }, [chartData, cameraIndex]);
 
     return (
         <div style={{ width: "100%", height: "88%" }}>
