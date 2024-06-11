@@ -820,16 +820,16 @@ const PeopleAnalyticsV3 = () => {
 
                   leftText={
                     selectedCamera === "camera1" && camera1StreamInfo.data && camera1StreamInfo.data.length >= 1 ?
-                      camera1StreamInfo.data[0].cumulative_ethnicity.local :
+                      camera1StreamInfo.data[0].cumulative_ethnicity.non_local :
                       selectedCamera === "camera2" && camera2StreamInfo.data ?
-                        camera1StreamInfo.data[0].cumulative_ethnicity.local :
+                        camera1StreamInfo.data[0].cumulative_ethnicity.non_local :
                         0
                   }
                   rightText={
                     selectedCamera === "camera1" && camera1StreamInfo.data && camera1StreamInfo.data.length >= 1 ?
-                      camera1StreamInfo.data[0].cumulative_ethnicity.non_local :
+                      camera1StreamInfo.data[0].cumulative_ethnicity.local :
                       selectedCamera === "camera2" && camera2StreamInfo.data ?
-                        camera1StreamInfo.data[0].cumulative_ethnicity.non_local :
+                        camera1StreamInfo.data[0].cumulative_ethnicity.local :
                         0
                   }
                 />
