@@ -4,33 +4,39 @@ import { constants } from '../../constants/constantsV3'
 import { Box, FormControl, FormControlLabel, MenuItem, Select, Switch } from "@mui/material";
 // import VideoCameraBackIcon from "@mui/icons-material/VideoCameraBack";
 import CircularProgress from "@mui/material/CircularProgress";
+import VideoCameraBackIcon from "@mui/icons-material/VideoCameraBack";
+import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 
-import PlotlyDonut from '../../components/PlotlyCharts/PlotlyDonut.jsx';
+// import PlotlyDonut from '../../components/PlotlyCharts/PlotlyDonut.jsx';
 import DateSelector from "../../components/DateSelector/DateSelector.jsx";
 import GenderCard from "../../components/GenderCard/GenderCard.jsx";
-import PlotlyGroupedBarChart from "../../components/PlotlyCharts/PlotlyGroupBarChart.jsx";
+// import PlotlyGroupedBarChart from "../../components/PlotlyCharts/PlotlyGroupBarChart.jsx";
 import Map from "../../components/leafletMap/Map.jsx";
 
 import femalIcon from "./images/female.png";
 import maleIcon from "./images/male.png";
 import multipleUserIcon from "./images/maleFemaleGroup.png";
+import foreignerIcon from "/images/foreignerIcon.png"
+import liveCount from "/images/liveCount.svg"
 import view3 from "./videos/view3.mp4"
 import "./PeopleAnalyticsV3.css"
 import axios from 'axios';
 import AreaChart from '../../components/charts/AreaChart.jsx';
+import TrendCard from '../../components/trendCard/TrendCard.jsx';
+import GoogelMapComponent from '../../components/googleMap/GoogelMapComponent.jsx';
+import Swal from 'sweetalert2';
 
 const PeopleAnalyticsV3 = () => {
 
-  let baseurlCharts = constants.chartsDataIP;
 
   const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-  const [heightOffset, setHeightOffset] = useState(60);
   const [selectedCamera, setSelectedCamera] = useState("camera1")
   const [cameraIndex, setCameraIndex] = useState(0);
   const [isView3, setIsView3] = useState(false);
+  const [isPdfDownloading, setIsPdfDownloading] = useState(false);
+
   const [isView3VideoPlayed, setIsView3VideoPlayed] = useState(false);
   const [enabledDates, setEnabledDates] = useState([]);
-  const [defaultFilePath, setDefaultFilePath] = useState(null);
   const [selectedDate, setSelectedDate] = useState([]);
 
   const [sideBarItems, setSideBarItems] = useState([
@@ -43,19 +49,24 @@ const PeopleAnalyticsV3 = () => {
   const [markersPosition, setMarkersPosition] = useState([
     {
       name: "Camera1",
-      position: [0.5, 0.28],
+      position: [0.6, 0.58],
       isActive: true,
     },
     {
       name: "Camera2",
-      position: [0.6, 0.6],
+      position: [0.3, 0.82],
       isActive: false,
     },
     {
       name: "Camera3",
-      position: [0.7, 1.02],
+      position: [0.7, 0.85],
       isActive: false,
     },
+  ]);
+  const [googleMarkerPositions, setGoogleMarkerPositions] = useState([
+    { lat: 17.479620144756336, lng: 44.178665091706534, label: "", title: "Camera 1", isActive: true },
+    { lat: 17.48264315972698, lng: 44.18109734406652, label: "", title: "Camera 2", isActive: false },
+    { lat: 17.479198336896417, lng: 44.182392162567946, label: "", title: "Camera 3", isActive: false }
   ]);
 
   const [camera1StreamInfo, setCamera1StreamInfo] = useState({
@@ -202,97 +213,201 @@ const PeopleAnalyticsV3 = () => {
   })
 
   const [time, setTime] = useState(new Date());
-  // useMemo(() => {
-  //   const intervalId = setInterval(() => {
-  //     setTime(new Date());
-  //     // setUpdateChartsCounter(prevCounter => prevCounter + 1);
-  //   }, 1000); // Update time every second
 
-  //   return () => clearInterval(intervalId);
-  // }, []);
+  useMemo(() => {
+    const intervalId = setInterval(() => {
+      setTime(new Date());
+    }, 1000); // Update time every second
+
+    return () => clearInterval(intervalId);
+  }, []);
   // Empty dependency array to run this effect only once on component mount
 
 
   const handleSelectSideBarItem = (e, from) => {
-    // setHistoryDate({ ...historyDate, selectedDate: null })
+    const index = from === "dropdown" ? e.target.value : e;
 
-    let index = 0;
-    if (from == "dropdown") {
-      index = e.target.value;
-    } else {
-      index = e;
-    }
+    // Update camera index and selected camera
     setCameraIndex(index);
     setSelectedCamera("camera" + (Number(index) + 1));
 
+    // Helper function to update items
+    const updateItems = (items, idx, key) => {
+      return items.map((item, i) => ({ ...item, [key]: i === idx }));
+    };
 
-    let tempSideBarItems = sideBarItems.map((item) => {
-      return { ...item, active: false };
-    });
-    tempSideBarItems[index].active = true;
-    setSideBarItems(tempSideBarItems);
+    // Update side bar items
+    setSideBarItems(prevItems => updateItems(prevItems, index, "active"));
 
-    let tempMarkersPosition = markersPosition.map((item) => {
-      return { ...item, isActive: false };
-    });
-    tempMarkersPosition[index].isActive = true;
-    setMarkersPosition(tempMarkersPosition);
+    // Update marker positions based on source
+    // if (from === "googleMap") {
+    //   setGoogleMarkerPositions(prevPositions => updateItems(prevPositions, index, "isActive"));
+    // } else {
+    setMarkersPosition(prevPositions => updateItems(prevPositions, index, "isActive"));
+    setGoogleMarkerPositions(prevPositions => updateItems(prevPositions, index, "isActive"));
+    // }
 
-
-
+    // Handle view state for index 2
     if (index === 2) {
       setTimeout(() => {
         setIsView3(true);
-        setIsView3VideoPlayed(true)
+        setIsView3VideoPlayed(true);
       }, 500);
-
     } else {
       setIsView3(false);
       setIsView3VideoPlayed(false);
-
-      // fetchVideoStream(cameraUrl[index]);
     }
   };
+
+
+
+  const handleGeneratePdf = async (date) => {
+    try {
+      setIsPdfDownloading(true)
+      const url = `${constants.historicDataIP}/stream/download_pdf`;
+      const params = { date_select: date };
+      const headers = { accept: 'application/json' };
+      const response = await axios.get(url, { params, headers, responseType: 'blob' });
+
+
+      if (response.headers['content-type'] === 'application/pdf') {
+
+        // PDF successfully generated, initiate download
+        const blob = new Blob([response.data], { type: 'application/pdf' });
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'people_analytics_report.pdf');
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+
+      }
+
+      setIsPdfDownloading(false)
+      return true;
+
+    } catch (error) {
+      setIsPdfDownloading(false)
+      console.log("error:", error);
+      return false;
+    }
+  }
 
   const handleDateChange = (date) => {
     // console.log("in handleDateChange");
     const selectedDate = date.format("DD-MM-YYYY");
-    // console.log("selectedDate:", selectedDate);
+    console.log("selectedDate:", selectedDate);
 
+    setSelectedDate([selectedDate])
+
+
+    Swal.fire({
+      title: "Want to download the report?",
+      // text: "You won't be able to revert this!",
+      icon: "warning",
+      iconColor: "#44C8F5",
+      showCancelButton: true,
+      confirmButtonColor: "#952D98",
+      cancelButtonColor: "#808285",
+      confirmButtonText: "Download"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        console.log("confirmed");
+        handleGeneratePdf(selectedDate);
+      }
+    });
+
+    // const url = `${constants.historicDataIP}/stream/get_total_counts`;
+    // const params = { date_select: selectedDate };
+    // const headers = { accept: 'application/json' };
+
+    // axios.get(url, { params, headers })
+    //   .then(response => {
+    //     console.log(response.data);
+
+    //     let hours = response.data.hours;
+    //     let counts = response.data.counts;
+
+
+    //     const minLength = 6;
+
+    //     // Fill x values with default hour values if less than minLength
+    //     const filledXValues = hours.length >= minLength
+    //       ? hours
+    //       : [...hours, ...Array.from({ length: minLength - hours.length }, (_, i) => String((hours.length + i) % 24).padStart(2, '0'))];
+
+    //     // Fill y values with zeroes if less than minLength
+    //     const filledYValues = counts.length >= minLength
+    //       ? counts
+    //       : [...counts, ...Array(minLength - counts.length).fill(0)];
+
+    //     setGroupChartData(prevState => ({
+    //       ...prevState,
+    //       data: [
+    //         {
+    //           ...prevState.data[0], // Keep other properties of the first trace
+    //           x: filledXValues,
+    //           y: filledYValues,
+    //         }
+    //       ]
+    //     }));
+
+
+
+
+    //   })
+    //   .catch(error => {
+    //     console.error('There was an error!', error);
+    //   });
+  }
+
+  const [areaChartData, setAreaChartData] = useState({
+    hours: [],
+    males: [],
+    females: []
+  });
+  const [trendCardData, setTrendCardData] = useState({
+    totalVisitors: 0,
+    slope: 0,
+    hours: [],
+    counts: [],
+    date: null,
+    lastHourCount: 0
+  })
+  function fetchGetTotalVisitorsCountApi() {
     const url = `${constants.historicDataIP}/stream/get_total_counts`;
-    const params = { date_select: selectedDate };
+    // const params = { date_select: selectedDate };
+    const params = {};
     const headers = { accept: 'application/json' };
 
     axios.get(url, { params, headers })
       .then(response => {
-        console.log(response.data);
 
         let hours = response.data.hours;
         let counts = response.data.counts;
+        let slope = response.data.slope;
+        let date = response.data.date;
+        let lastHourCount = 0
+
+        if (counts.length > 1) {
+          lastHourCount = counts[counts.length - 1]
+        } else {
+          lastHourCount = 0
+        }
 
 
-        const minLength = 6;
 
-        // Fill x values with default hour values if less than minLength
-        const filledXValues = hours.length >= minLength
-          ? hours
-          : [...hours, ...Array.from({ length: minLength - hours.length }, (_, i) => String((hours.length + i) % 24).padStart(2, '0'))];
+        setTrendCardData({
+          totalVisitors: counts.reduce((acc, curr) => acc + curr, 0),
+          slope: slope,
+          hours: hours,
+          counts: counts,
+          date: date,
+          lastHourCount: lastHourCount
+        })
 
-        // Fill y values with zeroes if less than minLength
-        const filledYValues = counts.length >= minLength
-          ? counts
-          : [...counts, ...Array(minLength - counts.length).fill(0)];
-
-        setGroupChartData(prevState => ({
-          ...prevState,
-          data: [
-            {
-              ...prevState.data[0], // Keep other properties of the first trace
-              x: filledXValues,
-              y: filledYValues,
-            }
-          ]
-        }));
 
 
 
@@ -302,13 +417,6 @@ const PeopleAnalyticsV3 = () => {
         console.error('There was an error!', error);
       });
   }
-
-  const [areaChartData, setAreaChartData] = useState({
-    hours: [],
-    males: [],
-    females: []
-  });
-
   const fetchDataForAreaChart = () => {
     const url = `${constants.historicDataIP}/stream/gender_hourly_counts`;
     const params = { date_select: selectedDate };
@@ -335,6 +443,27 @@ const PeopleAnalyticsV3 = () => {
       });
   };
 
+  useEffect(() => {
+    const fetchHistoricData = () => {
+      // if (constants.streaming) {
+      fetchDataForAreaChart();
+      fetchGetTotalVisitorsCountApi();
+      // }
+    };
+
+    fetchHistoricData();
+    const intervalId = setInterval(fetchHistoricData, constants.apiCallInterval); // Fetch every 1 minute (60000 ms)
+
+    return () => clearInterval(intervalId);
+  }, []);
+
+
+
+
+
+
+
+
   const [controller1, setController1] = useState(new AbortController());
   const [controller2, setController2] = useState(new AbortController());
 
@@ -355,7 +484,8 @@ const PeopleAnalyticsV3 = () => {
     };
 
     fetchData();
-    fetchDataForAreaChart();
+    // fetchDataForAreaChart();
+    // fetchGetTotalVisitorsCountApi();
 
 
     const cleanup = () => {
@@ -453,12 +583,73 @@ const PeopleAnalyticsV3 = () => {
         </div>
       </header>
 
-      <div style={{ height: "calc(100vh - 62px)", display: "flex", flexDirection: "column", gap: 5, padding: 5 }}>
+      <div style={{ position: "relative", height: "calc(100vh - 62px)", display: "flex", flexDirection: "column", gap: 5, padding: 5 }}>
+        {/* <Box className="settingsIconBox" sx={{ right: 15, bottom: 10, }}>
+          {
+            isPdfDownloading ?
+              (
+                <>
+                  <CircularProgress size={60} thickness={2} sx={{ position: "absolute", color: "#952D98" }} />
+                  <PictureAsPdfIcon className="pdfIcon" sx={{ fontSize: 40, opacity: 0.6 }} />
+                </>
+              ) :
+              (
+                <>
+                  <PictureAsPdfIcon className="pdfIcon" sx={{ fontSize: 40, opacity: 0.6 }} onClick={handleGeneratePdf} />
+                </>
+              )
+          }
 
+        </Box> */}
 
         <div style={{ height: "50%" }}>
 
-          <div className="PARightBoxChartsLeft" style={{ height: `100%` }} >
+          <div className="PARightBoxChartsLeft" style={{ height: `100%`, display: "flex", gap: 10 }} >
+            <div style={{
+              width: "180px", borderRadius: 10,
+              boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2)",
+              // overflowY: "scroll", overflowX: "hidden"
+            }}>
+              <div className="PASideBarTopBox1" style={{ borderRadius: "10px", height: "100%", alignItems: "center", justifyContent: "center" }}>
+                <div style={{
+                  // border: "2px solid",
+                  width: "90%",
+                  position: "relative"
+                }}>
+                  <label htmlFor="siteName" style={{ position: "absolute", left: 2, top: -8, fontSize: 10, fontFamily: "Roboto", fontWeight: "bold", color: "#952D98" }}>SITE NAME</label>
+                  <FormControl sx={{ m: 0, minWidth: 0, width: "100%" }}>
+                    <Select
+                      id='siteName'
+                      value={"najran"}
+                    // onChange={(e) => handleSelectSideBarItem(e, "dropdown")}
+                    // displayEmpty
+                    // inputProps={{ 'aria-label': 'Without label' }}
+                    >
+                      <MenuItem value="najran">Najran</MenuItem>
+                      {/* <MenuItem value={1}>Site B</MenuItem> */}
+                      {/* <MenuItem value={2}>Site C</MenuItem> */}
+                    </Select>
+                  </FormControl>
+                </div>
+                {sideBarItems.map((item, index) => (
+                  <div
+                    key={item + "_" + index}
+                    className={`PASideBarItem ${item["active"] && "active"}`}
+                    style={{ flex: "initial", height: 60, width: "90%" }}
+                    onClick={() => handleSelectSideBarItem(index)}
+                  >
+                    <div className="PASideBarItemIconBox">
+                      <VideoCameraBackIcon style={{ fontSize: "30px", color: item["active"] ? "#FF00FF" : "#2A6EBB" }}
+                      />
+                    </div>
+
+                    <div className="">
+                      Camera {item["index"]}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
             {/* ------ IMAGE AND MAP AREA ------ */}
             <div className="PARightBoxChartsLeftCameraAndMap">
 
@@ -502,16 +693,21 @@ const PeopleAnalyticsV3 = () => {
 
               {/* ---------- OSM Map area ------------ */}
               <div className="mapParentBox" style={{ height: "100%" }}>
-                <Map
+                {/* <Map
                   markersPosition={markersPosition}
                   setMarkersPosition={setMarkersPosition}
+                  handleSelectSideBarItem={handleSelectSideBarItem}
+                /> */}
+
+                <GoogelMapComponent
+                  googleMarkerPositions={googleMarkerPositions}
                   handleSelectSideBarItem={handleSelectSideBarItem}
                 />
               </div>
 
               {/* Date Time and Date Selecter divs */}
               <div className="PARightBoxChartsRight" style={{ padding: '0px' }}>
-                <div className="PAMostRigtTopBox" style={{ height: "100%", gap: 5 }}>
+                <div className="PAMostRigtTopBox" style={{ position: "relative", height: "100%", gap: 5 }}>
 
                   <div className="PAInfoCard" style={{ color: "#000", padding: 0, margin: 0, marginBottom: 0 }}>
                     <div style={{
@@ -532,7 +728,7 @@ const PeopleAnalyticsV3 = () => {
                   </div>
                   {/* ********************** */}
 
-                  <FormControl sx={{ m: 0, minWidth: 0 }}>
+                  {/* <FormControl sx={{ m: 0, minWidth: 0 }}>
                     <Select
                       value={cameraIndex}
                       onChange={(e) => handleSelectSideBarItem(e, "dropdown")}
@@ -543,21 +739,23 @@ const PeopleAnalyticsV3 = () => {
                       <MenuItem value={1}>Camera 2</MenuItem>
                       <MenuItem value={2}>Camera 3</MenuItem>
                     </Select>
-                    {/* <FormHelperText>Without label</FormHelperText> */}
-                  </FormControl>
+                  </FormControl> */}
                   <DateSelector
                     dateType="selectedDate"
                     historyDate={historyDate}
                     // setHistoryDate={setHistoryDate}
                     enabledDates={enabledDates}
                     setEnabledDates={setEnabledDates}
-                    setSelectedDate={setSelectedDate}
+                    // setSelectedDate={setSelectedDate}
                     cameraIndex={cameraIndex}
-                    groupChartData={groupChartData}
-
+                    // groupChartData={groupChartData}
                     handleDataSelectorChange={handleDateChange}
                     historicDataIP={constants.historicDataIP}
                   />
+                  {
+                    isPdfDownloading &&
+                    <CircularProgress size={35} thickness={3} sx={{ color: "#952D98", position: "absolute", bottom: 11, right: 12 }} />
+                  }
 
                 </div>
 
@@ -578,11 +776,26 @@ const PeopleAnalyticsV3 = () => {
           {/* Gender Cards Area */}
           <div className="PACenterBottomArea" style={{ height: "100%" }}>
             <div className="PACenterBottomAreadiv1" style={{ height: "100%" }}>
+
+              <div className="PAGenderCardBox">
+                <GenderCard
+                  conditionText={"total"}
+                  imgSrc={liveCount}
+                  heading={constants.card4Text}
+                  imgSrcLeft={femalIcon}
+                  imgSrcRight={maleIcon}
+                  imgLeftWidth={"2.6vw"}
+                  imgRightWidth={"4.5vw"}
+                  value={(camera1StreamInfo.data && camera1StreamInfo?.data.length > 0) ? camera1StreamInfo.data[0].instant_count : 0}
+                />
+              </div>
               <div className="PAGenderCardBox" >
                 <GenderCard
                   heading={constants.card1Text}
                   imgSrcLeft={femalIcon}
                   imgSrcRight={maleIcon}
+                  imgLeftWidth={"4vw"}
+                  imgRightWidth={"4.5vw"}
                   leftText={
                     selectedCamera === "camera1" && camera1StreamInfo.data && camera1StreamInfo.data.length >= 1 ?
                       camera1StreamInfo.data[0].cumulative_gender.female :
@@ -604,33 +817,25 @@ const PeopleAnalyticsV3 = () => {
                 <GenderCard
                   // heading="Side 2"
                   heading={constants.card2Text}
-                  imgSrcLeft={femalIcon}
+                  imgSrcLeft={foreignerIcon}
                   imgSrcRight={maleIcon}
+                  imgLeftWidth={"3vw"}
+                  imgRightWidth={"4.5vw"}
 
                   leftText={
-                    selectedCamera === "camera1" && camera1StreamInfo.data && camera1StreamInfo.data.length >= 1 ?
-                      camera1StreamInfo.data[0].cumulative_ethnicity.non_local :
-                      selectedCamera === "camera2" && camera2StreamInfo.data ?
-                        camera1StreamInfo.data[0].cumulative_ethnicity.non_local :
-                        0
-                  }
-                  rightText={
                     selectedCamera === "camera1" && camera1StreamInfo.data && camera1StreamInfo.data.length >= 1 ?
                       camera1StreamInfo.data[0].cumulative_ethnicity.local :
                       selectedCamera === "camera2" && camera2StreamInfo.data ?
                         camera1StreamInfo.data[0].cumulative_ethnicity.local :
                         0
                   }
-                />
-              </div>
-              <div className="PAGenderCardBox">
-                <GenderCard
-                  conditionText={"total"}
-                  imgSrc={multipleUserIcon}
-                  heading={constants.card4Text}
-                  imgSrcLeft={femalIcon}
-                  imgSrcRight={maleIcon}
-                  value={(camera1StreamInfo.data && camera1StreamInfo?.data.length > 0) ? camera1StreamInfo.data[0].instant_count : 0}
+                  rightText={
+                    selectedCamera === "camera1" && camera1StreamInfo.data && camera1StreamInfo.data.length >= 1 ?
+                      camera1StreamInfo.data[0].cumulative_ethnicity.non_local :
+                      selectedCamera === "camera2" && camera2StreamInfo.data ?
+                        camera1StreamInfo.data[0].cumulative_ethnicity.non_local :
+                        0
+                  }
                 />
               </div>
               <div className="PAGenderCardBox">
@@ -638,10 +843,16 @@ const PeopleAnalyticsV3 = () => {
                   heading={constants.card3Text}
                   conditionText={"total"}
                   imgSrc={multipleUserIcon}
+                  imgLeftWidth={"4vw"}
+                  imgRightWidth={"4.5vw"}
                   value={(camera1StreamInfo.data && camera1StreamInfo?.data.length > 0) ? camera1StreamInfo.data[0].cumulative_count : 0}
                 />
               </div>
-
+              <div className="PAGenderCardBox" >
+                <TrendCard
+                  trendCardData={trendCardData}
+                />
+              </div>
 
             </div>
           </div>
@@ -804,7 +1015,7 @@ const PeopleAnalyticsV3 = () => {
           </div>
         </div>
       </div >
-    </main>
+    </main >
   )
 }
 

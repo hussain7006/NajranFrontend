@@ -14,6 +14,9 @@ import Swal from 'sweetalert2'
 import "../../../node_modules/leaflet/dist/leaflet.css";
 import "./map.css";
 import paMap from "/images/paMap.png"
+import najranMapView from "/images/najranMapView.png"
+import najranMapView1 from "/images/najranMapView1.png"
+
 import videoMarkerNavyBlue from "/images/images/video_camera_navy_blue.png"
 import videoMarkerPink from "/images/images/video_camera_Pink.png"
 import { getToken } from "../../utils/functions";
@@ -34,55 +37,56 @@ function Map(props) {
 
 
   useEffect(() => {
+    setData({ ...data, mapImage: najranMapView1 });
 
-    let accessToken = getToken("accessToken")
-    const fetchImage = async () => {
-      // try {
-      //   const res = await axios.post(`${constants.nodeJsServer}/users/getUserUploadedMapImage`, null, {
-      //     headers: {
-      //       Authorization: `Bearer ${accessToken}` // Include token in Authorization header
-      //     }
-      //   })
-      //     .then(async function (response) {
-      //       let res = response.data
-      //       if (res.success) {
-      // console.log(res);
-      // const mapImage = res.data.mapImage;
-      // setData({ ...data, mapImage: mapImage })
-      setData({ ...data, mapImage: paMap })
 
-      // } else {
+    // let accessToken = getToken("accessToken")
+    // const fetchImage = async () => {
+    //   try {
+    //     const res = await axios.post(`${constants.nodeJsServer}/users/getUserUploadedMapImage`, null, {
+    //       headers: {
+    //         Authorization: `Bearer ${accessToken}` // Include token in Authorization header
+    //       }
+    //     })
+    //       .then(async function (response) {
+    //         let res = response.data
+    //         if (res.success) {
+    //   console.log(res);
+    //   const mapImage = res.data.mapImage;
+    //   setData({ ...data, mapImage: mapImage })
 
-      // Swal.fire({
-      //   title: 'Error!',
-      //   text: res.message,
-      //   icon: 'error',
-      //   confirmButtonText: 'Close',
-      //   confirmButtonColor: "red"
-      //   // showCancelButton: true,
-      // })
-      // }
-      // })
-      // .catch(function (error) {
-      //   console.log(error);
-      //   Swal.fire({
-      //     title: 'Error!',
-      //     text: "Something went wrong",
-      //     icon: 'error',
-      //     confirmButtonText: 'Close',
-      //     confirmButtonColor: "red"
-      //     // showCancelButton: true,
-      //   })
-      // });
+    //   } else {
 
-      // } catch (error) {
-      //   console.error('Error fetching image:', error);
-      // }
-    };
+    //   Swal.fire({
+    //     title: 'Error!',
+    //     text: res.message,
+    //     icon: 'error',
+    //     confirmButtonText: 'Close',
+    //     confirmButtonColor: "red"
+    //     // showCancelButton: true,
+    //   })
+    //   }
+    //   })
+    //   .catch(function (error) {
+    //     console.log(error);
+    //     Swal.fire({
+    //       title: 'Error!',
+    //       text: "Something went wrong",
+    //       icon: 'error',
+    //       confirmButtonText: 'Close',
+    //       confirmButtonColor: "red"
+    //       // showCancelButton: true,
+    //     })
+    //   });
 
-    if (accessToken) {
-      fetchImage()
-    }
+    //   } catch (error) {
+    //     console.error('Error fetching image:', error);
+    //   }
+    // };
+
+    // if (accessToken) {
+    //   fetchImage()
+    // }
   }, [])
 
   const [bounds, setBounds] = useState(null);
@@ -98,9 +102,6 @@ function Map(props) {
           const img = new Image();
           img.onload = () => {
             const aspectRatio = img.width / img.height;
-            // console.log(img.width);
-            // console.log(img.height);
-            // console.log(aspectRatio);
             // Adjust the bounds based on the aspect ratio of the image
             const southWest = [0, 0];
             const northEast = [aspectRatio, aspectRatio]; // Assume height is 1 for simplicity
@@ -128,7 +129,7 @@ function Map(props) {
     }}>
       <LeafletMap
         center={[aspectRatio / 2, aspectRatio / 2]} // Center of the map
-        zoom={8.5} // Initial zoom level
+        zoom={8.7} // Initial zoom level
         zoomSnap={0.1} // Set the zoom snap steps
         zoomDelta={0.1} // Set the zoom delta steps
 
@@ -161,12 +162,12 @@ function Map(props) {
 
           ))
         }
-        {bounds && (
+        {/* {bounds && (
           <ImageOverlay
             url={data.mapImage} // URL of the image
             bounds={bounds} // Bounds of the image overlay
           />
-        )}
+        )} */}
       </LeafletMap>
     </div >
   );

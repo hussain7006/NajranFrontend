@@ -1,8 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import Chart from 'react-apexcharts';
+import { constants } from '../../constants/constantsV3';
 
 function AreaChart({ title, type, chartData }) {
+    // console.log("chartData:", chartData);
 
+    const getFillColor = (type) => {
+        switch (type) {
+            case 'male':
+                return ['#0000FF', '#FFFFFF']; // Blue gradient for male
+            case 'female':
+                return ['#FF69B4', '#FFFFFF']; // Pink gradient for female
+            default:
+                return ['#ff00ff', '#FFFFFF']; // Default magenta gradient
+        }
+    };
 
     const data = [10, 2, 50, 89, 2,]
     const [state, setState] = useState({
@@ -19,7 +31,7 @@ function AreaChart({ title, type, chartData }) {
                         fontSize: '14px',
                         fontWeight: 'bold',
                         fontFamily: undefined,
-                        color: '#952D98'
+                        color: (type == "female") ? '#ff00ff' : "#2A6EBB",
                     },
                 },
                 chart: {
@@ -107,7 +119,7 @@ function AreaChart({ title, type, chartData }) {
                         formatter: function (value) {
                             // const options = { hour: 'numeric', minute: 'numeric', second: 'numeric' };
                             // return new Date(value).toLocaleTimeString('en-US', options);
-                            if (value)
+                            if (value != undefined)
                                 return value + " hr"
                         }
                     },
@@ -128,13 +140,13 @@ function AreaChart({ title, type, chartData }) {
                         colorStops: [
                             {
                                 offset: 0,
-                                color: '#ff00ff', // Pink (filled color)
+                                color: (type == "female") ? '#ff00ff' : "#2A6EBB", // Pink (filled color)
                                 opacity: 0.5,
                             },
                             {
                                 offset: 100,
                                 color: 'white', // Pink (filled color)
-                                opacity: 0.7,
+                                opacity: 0.5,
                             },
                         ],
                     }
@@ -148,8 +160,8 @@ function AreaChart({ title, type, chartData }) {
                 // },
                 stroke: {
                     curve: 'smooth',
-                    colors: ['#ff00ff'], // Magenta (outline color)
-                    width: 2, // Outline width
+                    colors: (type == "female") ? ['#ff00ff'] : ["#2A6EBB"], // Magenta (outline color)
+                    width: 3, // Outline width
                 },
                 dropShadow: {
                     enabled: true,
@@ -170,9 +182,7 @@ function AreaChart({ title, type, chartData }) {
                     },
                 ],
                 noData: {
-                    text: "Stream is offline",
-                    // align: 'center',
-                    // verticalAlign: 'middle',
+                    text: !constants.streaming ? "Stream is offline" : "Data will appear shortly. Please wait...",
                     offsetX: 0,
                     offsetY: -20,
                     style: {

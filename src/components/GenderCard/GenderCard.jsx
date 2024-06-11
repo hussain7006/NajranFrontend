@@ -19,7 +19,7 @@ const CardContentNoPadding = styled(CardContent)(`
 `);
 
 function GenderCard(props) {
-    let { heading, imgSrc, imgSrcRight, imgSrcLeft, rightText, leftText, conditionText, value } = props;
+    let { heading, imgSrc, imgSrcRight, imgSrcLeft, rightText, leftText, conditionText, value, imgLeftWidth, imgRightWidth } = props;
     // console.log("conditionText:", conditionText);
     return (
         <Card
@@ -42,13 +42,13 @@ function GenderCard(props) {
                     {
                         conditionText == "total" ?
                             <div style={{ display: "flex", justifyContent: "space-around" }}>
-                                <img src={imgSrc} style={{ width: "4.5vw", textAlign: "center", objectFit: "cover" }} />
+                                <img src={imgSrc} style={{ width: imgLeftWidth, textAlign: "center", objectFit: "cover" }} />
                             </div>
                             :
-                            <div style={{ display: "flex", justifyContent: "space-around" }}>
+                            <div style={{ display: "flex", justifyContent: "space-around", alignItems: "center" }}>
 
-                                <img src={imgSrcLeft} style={{ width: "4.5vw", objectFit: "cover" }} />
-                                <img src={imgSrcRight} style={{ width: "4.5vw", objectFit: "cover" }} />
+                                <img src={imgSrcLeft} style={{ width: imgLeftWidth, objectFit: "cover" }} />
+                                <img src={imgSrcRight} style={{ width: imgRightWidth, objectFit: "cover" }} />
                             </div>
 
                     }
