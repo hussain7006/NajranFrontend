@@ -210,7 +210,7 @@ function AreaChart({ title, type, chartData, cameraIndex }) {
                     ...prevState.options,
                     xaxis: {
                         ...prevState.areaChartData.options.xaxis,
-                        categories: (chartData.hours && (cameraIndex == 0)) || [],
+                        categories: (cameraIndex == 0) ? (chartData.hours || []) : [],
                     },
                 },
             },

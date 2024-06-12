@@ -6,10 +6,10 @@ export const constants = {
 
 
 
-    cam1IP: "http://localhost:8004",
-    cam2IP: "http://localhost:8001",
+    cam1IP: "http://192.168.18.6:8004",
+    cam2IP: "http://192.168.18.6:8001",
 
-    historicDataIP: "http://localhost:8005",
+    historicDataIP: "http://192.168.18.6:8005",
 
     apiCallInterval: 600000, // 10 mins,   1min= 60000
 
