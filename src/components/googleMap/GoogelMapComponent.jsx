@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
-import { ZoomControl } from "react-leaflet";
 
 import videoMarkerNavyBlue from "/images/images/video_camera_navy_blue.png"
 import videoMarkerPink from "/images/images/video_camera_Pink.png"
+import video_camera_Purple from "/images/images/video_camera_Purple.png"
 
 function GoogelMapComponent(props) {
 
@@ -19,7 +19,7 @@ function GoogelMapComponent(props) {
     const createMarkerIcon = (item, index, size) => {
         // console.log(item);
         return {
-            url: item.isActive ? videoMarkerPink : videoMarkerNavyBlue,
+            url: item.isActive ? video_camera_Purple : videoMarkerNavyBlue,
             scaledSize: new window.google.maps.Size(size, size), // Set custom size
         }
     };

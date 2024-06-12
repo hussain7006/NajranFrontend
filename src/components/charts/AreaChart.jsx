@@ -213,11 +213,18 @@ function AreaChart({ title, type, chartData, cameraIndex }) {
                         categories: (cameraIndex == 0) ? (chartData.hours || []) : [],
                     },
                     noData: {
-                        text: (!constants.streaming || cameraIndex != 0) ? "Stream is offline" : "Data will appear shortly. Please wait...",
+                        // text: (!constants.streaming || cameraIndex != 0) ? "Stream is offline" : "Data will appear shortly. Please wait...",
+                        text: constants.streaming
+                            ? (cameraIndex === 0 && constants.camera_1_live)
+                                ? "Data will appear shortly. Please wait..."
+                                : (cameraIndex === 1 && constants.camera_2_live)
+                                    ? "Data will appear shortly. Please wait..."
+                                    : "Stream is offline"
+                            : "Stream is offline",
                         offsetX: 0,
                         offsetY: -20,
                         style: {
-                            color: "#952D98",
+                            color: "#808080",
                             fontSize: '14px',
                             fontFamily: undefined
                         }

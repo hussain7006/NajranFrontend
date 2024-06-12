@@ -445,10 +445,8 @@ const PeopleAnalyticsV3 = () => {
 
   useEffect(() => {
     const fetchHistoricData = () => {
-      // if (constants.streaming) {
       fetchDataForAreaChart();
       fetchGetTotalVisitorsCountApi();
-      // }
     };
 
     fetchHistoricData();
@@ -473,8 +471,12 @@ const PeopleAnalyticsV3 = () => {
 
     const fetchData = async () => {
       if (constants.streaming) {
-        fetchVideoStream1(cameraUrl[0], controller1);
-        // fetchVideoStream2(cameraUrl[1], controller2);
+        if (constants.camera_1_live) {
+          fetchVideoStream1(cameraUrl[0], controller1);
+        }
+        if (constants.camera_2_live) {
+          // fetchVideoStream2(cameraUrl[1], controller2);
+        }
       }
     };
 
@@ -631,7 +633,7 @@ const PeopleAnalyticsV3 = () => {
                     onClick={() => handleSelectSideBarItem(index)}
                   >
                     <div className="PASideBarItemIconBox">
-                      <VideoCameraBackIcon style={{ fontSize: "30px", color: item["active"] ? "#FF00FF" : "#2A6EBB" }}
+                      <VideoCameraBackIcon style={{ fontSize: "30px", color: item["active"] ? "#952D98" : "#2A6EBB" }}
                       />
                     </div>
 
@@ -664,21 +666,53 @@ const PeopleAnalyticsV3 = () => {
                       </div>
                   ) :
 
-                    selectedCamera === "camera1" && camera1StreamInfo.stream ? (
-                      <img src={camera1StreamInfo.stream} alt="Stream" className="streamImage" />
-                    ) : selectedCamera === "camera2" && camera2StreamInfo.stream ? (
-                      <img src={camera2StreamInfo.stream} alt="Stream" className="streamImage" />
-                    ) : (!constants.streaming) ?
-                      (
+                    // (selectedCamera === "camera1" && camera1StreamInfo.stream) ? (
+                    //   <img src={camera1StreamInfo.stream} alt="Stream" className="streamImage" />
+                    // ) : (selectedCamera === "camera2" && camera2StreamInfo.stream) ? (
+                    //   <img src={camera2StreamInfo.stream} alt="Stream" className="streamImage" />
+                    // ) : (!constants.streaming) ?
+                    //   (
+                    //     <div style={{ width: "100%", height: "100%", borderRadius: 20, display: "flex", justifyContent: "center", alignItems: "center", color: "gray", fontSize: 22 }}>
+                    //       Stream is offline
+                    //     </div>
+                    //   ) : (
+                    //     <div className="loadingIndicator">
+                    //       <CircularProgress />
+                    //     </div>
+                    //   )
+
+                    (
+                      constants.streaming ? (
+                        (selectedCamera === "camera1" && constants.camera_1_live) ? (
+                          camera1StreamInfo.stream ? (
+                            <img src={camera1StreamInfo.stream} alt="Stream" className="streamImage" />
+                          ) : (
+                            <div className="loadingIndicator">
+                              <CircularProgress />
+                            </div>
+                          )
+                        ) : (
+                          (selectedCamera === "camera2" && constants.camera_2_live) ? (
+                            camera2StreamInfo.stream ? (
+                              <img src={camera2StreamInfo.stream} alt="Stream" className="streamImage" />
+                            ) : (
+                              <div className="loadingIndicator">
+                                <CircularProgress />
+                              </div>
+                            )
+                          ) : (
+                            <div style={{ width: "100%", height: "100%", borderRadius: 20, display: "flex", justifyContent: "center", alignItems: "center", color: "gray", fontSize: 22 }}>
+                              Stream is offline
+                            </div>
+                          )
+                        )
+                      ) : (
                         <div style={{ width: "100%", height: "100%", borderRadius: 20, display: "flex", justifyContent: "center", alignItems: "center", color: "gray", fontSize: 22 }}>
                           Stream is offline
                         </div>
-                      ) : (
-                        <div className="loadingIndicator">
-                          <CircularProgress />
-                          {/* <img src={camera1StreamInfo.stream} alt="Stream" className="streamImage" /> */}
-                        </div>
                       )
+                    )
+
 
                 }
               </div>
