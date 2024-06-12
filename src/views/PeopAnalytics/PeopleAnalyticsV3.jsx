@@ -392,7 +392,7 @@ const PeopleAnalyticsV3 = () => {
         let lastHourCount = 0
 
         if (counts.length > 1) {
-          lastHourCount = counts[counts.length - 1]
+          lastHourCount = counts[counts.length - 2]
         } else {
           lastHourCount = 0
         }
