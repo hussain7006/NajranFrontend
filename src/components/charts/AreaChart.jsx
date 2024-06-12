@@ -212,6 +212,16 @@ function AreaChart({ title, type, chartData, cameraIndex }) {
                         ...prevState.areaChartData.options.xaxis,
                         categories: (cameraIndex == 0) ? (chartData.hours || []) : [],
                     },
+                    noData: {
+                        text: (!constants.streaming || cameraIndex != 0) ? "Stream is offline" : "Data will appear shortly. Please wait...",
+                        offsetX: 0,
+                        offsetY: -20,
+                        style: {
+                            color: "#952D98",
+                            fontSize: '14px',
+                            fontFamily: undefined
+                        }
+                    },
                 },
             },
         }));
