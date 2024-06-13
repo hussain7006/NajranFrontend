@@ -1,17 +1,12 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { constants } from '../../constants/constantsV3'
 
-import { Box, FormControl, FormControlLabel, MenuItem, Select, Switch } from "@mui/material";
-// import VideoCameraBackIcon from "@mui/icons-material/VideoCameraBack";
+import { FormControl, MenuItem, Select } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
 import VideoCameraBackIcon from "@mui/icons-material/VideoCameraBack";
-import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 
-// import PlotlyDonut from '../../components/PlotlyCharts/PlotlyDonut.jsx';
 import DateSelector from "../../components/DateSelector/DateSelector.jsx";
 import GenderCard from "../../components/GenderCard/GenderCard.jsx";
-// import PlotlyGroupedBarChart from "../../components/PlotlyCharts/PlotlyGroupBarChart.jsx";
-import Map from "../../components/leafletMap/Map.jsx";
 
 import femalIcon from "./images/female.png";
 import maleIcon from "./images/male.png";
