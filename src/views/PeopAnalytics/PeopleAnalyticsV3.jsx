@@ -11,7 +11,8 @@ import GenderCard from "../../components/GenderCard/GenderCard.jsx";
 import femalIcon from "./images/female.png";
 import maleIcon from "./images/male.png";
 import multipleUserIcon from "./images/maleFemaleGroup.png";
-import foreignerIcon from "/images/foreignerIcon.png"
+// import foreignerIcon from "/images/foreignerIcon.png"
+import foreignerIconCopy from "/images/foreignerIconCopy.png"
 import liveCount from "/images/liveCount.svg"
 import view3 from "./videos/view3.mp4"
 import "./PeopleAnalyticsV3.css"
@@ -596,7 +597,7 @@ const PeopleAnalyticsV3 = () => {
           <div className="PARightBoxChartsLeft" style={{ height: `100%`, display: "flex", gap: 10 }} >
             <div style={{
               width: "180px", borderRadius: 10,
-              boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2)",
+              // boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2)",
               // overflowY: "scroll", overflowX: "hidden"
             }}>
               <div className="PASideBarTopBox1" style={{ borderRadius: "10px", height: "100%", alignItems: "center", justifyContent: "center" }}>
@@ -730,7 +731,7 @@ const PeopleAnalyticsV3 = () => {
               <div className="PARightBoxChartsRight" style={{ padding: '0px' }}>
                 <div className="PAMostRigtTopBox" style={{ position: "relative", height: "100%", gap: 5 }}>
 
-                  <div className="PAInfoCard" style={{ color: "#000", padding: 0, margin: 0, marginBottom: 0 }}>
+                  <div className="PAInfoCard" style={{ borderBottom: "3px solid #952D98", color: "#000", padding: 0, margin: 0, marginBottom: 0 }}>
                     <div style={{
                       textAlign: "center", fontWeight: "bold", fontSize: "1.8vw", height: "100%", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center",
                     }}>
@@ -739,7 +740,7 @@ const PeopleAnalyticsV3 = () => {
                       {time.getDate()}
                     </div>
                   </div>
-                  <div className="PAInfoCard" style={{ color: "#000", padding: 0, margin: 0, marginBottom: 0 }}>
+                  <div className="PAInfoCard" style={{ borderBottom: "3px solid #952D98", color: "#000", padding: 0, margin: 0, marginBottom: 0 }}>
                     <div style={{
                       textAlign: "center", fontWeight: "bold", fontSize: "1.8vw", height: "100%", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center",
                     }}>
@@ -819,7 +820,7 @@ const PeopleAnalyticsV3 = () => {
                   heading={constants.card1Text}
                   imgSrcLeft={femalIcon}
                   imgSrcRight={maleIcon}
-                  imgLeftWidth={"4vw"}
+                  imgLeftWidth={"4.3vw"}
                   imgRightWidth={"4.5vw"}
                   leftText={
                     selectedCamera === "camera1" && camera1StreamInfo.data && camera1StreamInfo.data.length >= 1 ?
@@ -842,9 +843,9 @@ const PeopleAnalyticsV3 = () => {
                 <GenderCard
                   // heading="Side 2"
                   heading={constants.card2Text}
-                  imgSrcLeft={foreignerIcon}
+                  imgSrcLeft={foreignerIconCopy}
                   imgSrcRight={maleIcon}
-                  imgLeftWidth={"3vw"}
+                  imgLeftWidth={"3.2vw"}
                   imgRightWidth={"4.5vw"}
 
                   leftText={

@@ -47,8 +47,12 @@ function GenderCard(props) {
                             :
                             <div style={{ display: "flex", justifyContent: "space-around", alignItems: "center" }}>
 
-                                <img src={imgSrcLeft} style={{ width: imgLeftWidth, objectFit: "cover" }} />
-                                <img src={imgSrcRight} style={{ width: imgRightWidth, objectFit: "cover" }} />
+                                <div style={{ width: "50%", height: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                                    <img src={imgSrcLeft} style={{ width: imgLeftWidth, objectFit: "cover" }} />
+                                </div>
+                                <div style={{ width: "50%", height: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                                    <img src={imgSrcRight} style={{ width: imgRightWidth, objectFit: "cover" }} />
+                                </div>
                             </div>
 
                     }
@@ -62,8 +66,8 @@ function GenderCard(props) {
                     >
                         {heading}
                     </Typography>
-                    <span
-                        style={{ width: "100%", fontSize: 18, margin: 0 }}
+                    <div
+                        style={{ width: "100%", fontSize: 18, margin: 0, display: "flex", justifyContent: "center", alignItems: "center" }}
                     >
                         {
                             conditionText == "total" ?
@@ -77,14 +81,14 @@ function GenderCard(props) {
                                 </div>
                                 :
                                 <>
-                                    <div style={{ display: "flex", justifyContent: "space-around", width: "100%" }}>
-                                        <span>
+                                    <div style={{ display: "flex", justifyContent: "space-around", gap: 4, width: "100%" }}>
+                                        <span style={{ width: "50%", display: "flex", justifyContent: "center", alignItems: "center" }}>
                                             {isNaN(leftText) ?
                                                 0 :
                                                 (leftText)
                                             }
                                         </span>
-                                        <span>
+                                        <span style={{ width: "50%", display: "flex", justifyContent: "center", alignItems: "center" }}>
                                             {isNaN(rightText) ?
                                                 0 :
                                                 (rightText)
@@ -94,7 +98,7 @@ function GenderCard(props) {
                                 </>
 
                         }
-                    </span>
+                    </div>
                 </div>
             </div>
         </Card>

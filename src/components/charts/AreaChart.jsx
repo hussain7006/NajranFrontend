@@ -52,29 +52,16 @@ function AreaChart({ title, type, chartData, cameraIndex }) {
                         // console.log("opts:", opts);
                         return val
                     },
-                    // style: {
-                    //     fontSize: '14px',
-                    //     fontFamily: 'Helvetica, Arial, sans-serif',
-                    //     colors: [function (opts) {
-                    //         let value = opts.series[0][opts.dataPointIndex]
-                    //         if (value == 1) {
-                    //             return "green"
-                    //         }
-                    //         else if (value == 2) {
-                    //             return "red"
-                    //         }
-                    //         else if (value == 3) {
-                    //             return "#F9C846"
-                    //         }
-                    //         else if (value == 4) {
-                    //             return "#C200FB"
-                    //         }
-                    //         else if (value == 5) {
-                    //             return "#01BAEF"
-                    //         }
-                    //     }
-                    //     ]
-                    // },
+                    style: {
+                        fontSize: '14px',
+                        fontFamily: 'Helvetica, Arial, sans-serif',
+                        colors: [
+                            function (opts) {
+                                // let value = opts.series[0][opts.dataPointIndex]
+                                return (type === "male") ? "#2A6EBB" : "#FF00FF"
+                            }
+                        ]
+                    },
                 },
                 grid: {
                     show: false,

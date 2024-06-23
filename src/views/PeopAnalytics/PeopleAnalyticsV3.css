@@ -133,7 +133,7 @@ header {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); */
     line-height: 0px;
 }
 
@@ -318,9 +318,12 @@ header {
     /* Set a fixed height for the parent div */
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     border-radius: 15px;
-    overflow: hidden;
+    /* overflow: hidden; */
+    z-index: 1;
+
     /* Ensure content doesn't overflow */
 }
+
 
 .streamImage {
     width: 100%;
